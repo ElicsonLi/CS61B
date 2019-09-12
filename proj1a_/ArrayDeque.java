@@ -84,7 +84,7 @@ public class ArrayDeque<T>{
         double ratio;
         if(isEmpty())  return null;
         T ans = array[tail];
-        if(head-- < 0)  head = head + array.length;
+        if(tail-- < 0)  tail = tail + array.length;
         size --;
         while ((ratio = (double) size/array.length) < 0.25){
             halfsize();
