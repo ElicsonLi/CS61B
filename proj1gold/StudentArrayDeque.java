@@ -1,9 +1,9 @@
 public class StudentArrayDeque<T> {
-    private T[] a = (T[]) (new Object[8]);
+    private T[] a = (T[]) (new Object[8]); //array used to save data
     private int b = 8;
-    private int c = 0;
+    private int c = 0;  //mark the size
     private int d = 4;
-    private int e = 4;
+    private int e = 4;  //mark the begin of the array
     private int f = 5;
     private boolean g = false;
     private boolean h = false;
