@@ -5,10 +5,13 @@ import huglife.Direction;
 import huglife.Action;
 import huglife.Occupant;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
+
+import static huglife.HugLifeUtils.randomEntry;
+import static huglife.HugLifeUtils.randomInt;
 
 /**
  * An implementation of a motile pacifist photosynthesizer.
@@ -30,17 +33,22 @@ public class Plip extends Creature {
      */
     private int b;
 
+    private final double energyMax = 2;
+    private final double energyMin = 0;
     /**
      * creates plip with energy equal to E.
      */
     public Plip(double e) {
         super("plip");
-        r = 0;
+        r = 99;
         g = 0;
-        b = 0;
+        b = 76;
         energy = e;
     }
 
+    public String Name(){
+        return this.name();
+    }
     /**
      * creates a plip with energy equal to 1.
      */
@@ -57,7 +65,7 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        g = (int) (96*energy+63);
         return color(r, g, b);
     }
 
@@ -74,7 +82,7 @@ public class Plip extends Creature {
      * private static final variable. This is not required for this lab.
      */
     public void move() {
-        // TODO
+        energy -= 0.15;
     }
 
 
@@ -82,7 +90,10 @@ public class Plip extends Creature {
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
     public void stay() {
-        // TODO
+        energy += 0.2;
+        if(energy > energyMax){
+            energy = energyMax;
+        }
     }
 
     /**
@@ -91,7 +102,9 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        Plip offspring = new Plip(this.energy/2);
+        energy /= 2;
+        return offspring;
     }
 
     /**
@@ -109,20 +122,45 @@ public class Plip extends Creature {
      */
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
         // Rule 1
-        Deque<Direction> emptyNeighbors = new ArrayDeque<>();
+        Deque<Direction> emptyNeighbors = new ArrayDeque<> ();
         boolean anyClorus = false;
-        // TODO
-        // (Google: Enhanced for-loop over keys of NEIGHBORS?)
-        // for () {...}
-
-        if (false) { // FIXME
-            // TODO
+        for(Direction i : neighbors.keySet()){
+            if(neighbors.get(i).name().equals("empty")){
+                emptyNeighbors.add(i);
+            }else if(neighbors.get(i).name().equals("Clorus")){
+                anyClorus = true;
+            }
         }
 
-        // Rule 2
-        // HINT: randomEntry(emptyNeighbors)
+        Action action;
 
-        // Rule 3
+        // Rule 1: if there is no empty space, stay;
+        if (emptyNeighbors.size() == 0) {
+            action = new Action(Action.ActionType.STAY);
+            return action;
+        }
+
+        // Rule 2 if the Plip has energy greater than or equal to 1.0,
+        // it should replicate to an available space.
+        if(energy >= 1.0){
+            Plip os = this.replicate();
+            Direction dir = randomEntry(emptyNeighbors);
+            return new Action(Action.ActionType.REPLICATE,dir);
+        }
+
+        // Rule 3 if it sees a neighbor with name() equal to “clorus”, it will
+        // move to any available empty square with probability 50%. It should
+        // choose the empty square randomly. As an example, if it sees a Clorus
+        // to the BOTTOM, and “empty” to the TOP , LEFT, and RIGHT, there is a
+        // 50% chance it will move (due to fear of Cloruses), and if it does move,
+        // it will pick uniformly at random between TOP, LEFT, and RIGHT.
+        if(anyClorus){
+            Direction dir = randomEntry(emptyNeighbors);
+            if(randomInt(100) > 50){
+                return new Action(Action.ActionType.MOVE,dir);
+
+            }
+        }
 
         // Rule 4
         return new Action(Action.ActionType.STAY);
