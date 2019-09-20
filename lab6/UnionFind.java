@@ -52,6 +52,7 @@ public class UnionFind {
     public void union(int v1, int v2) {
         int r1 = find(v1);
         int r2 = find(v2);
+        if(r1 == r2)  return;
         if (-belongsto[r1] < -belongsto[r2]){
             belongsto[r2] += belongsto[r1];
             belongsto[r1] = r2;
@@ -72,4 +73,7 @@ public class UnionFind {
         return r;
     }
 
+    public void unitUnion(int v1, int v2) {
+        belongsto[v1] = v2;
+    }
 }

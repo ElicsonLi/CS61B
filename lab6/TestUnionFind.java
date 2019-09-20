@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 public class TestUnionFind {
 
     @Test
-    public void Test(){
+    public void testUnionFind(){
         UnionFind uf = new UnionFind(10);
         uf.union(1,2);
         uf.union(3,2);
@@ -22,6 +22,23 @@ public class TestUnionFind {
 
         uf.union(3,6);
         assertEquals(uf.sizeOf(9),7);
+
+    }
+
+    @Test
+    public void testWQUWPC(){
+        WQUwithPathCompresion uf = new WQUwithPathCompresion(10);
+        uf.union(1,2);
+        uf.union(3,2);
+        uf.union(4,2);
+        uf.union(5,6);
+        uf.union(7,8);
+        uf.union(6,9);
+
+
+        uf.union(3,6);
+        assertEquals(uf.sizeOf(9),7);
+        assertFalse(uf.connected(6,8));
 
     }
 }
