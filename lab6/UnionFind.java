@@ -1,6 +1,6 @@
 public class UnionFind {
 
-    private int [] belongsto;
+    protected int [] belongsto;
     // TODO - Add instance variables?
 
     /* Creates a UnionFind data structure holding n vertices. Initially, all
@@ -67,7 +67,7 @@ public class UnionFind {
     public int find(int vertex) {
         validate(vertex);
         int r = vertex;
-        while (belongsto[r] > 0){
+        while (belongsto[r] >= 0){
             r = belongsto[r];
         }
         return r;
