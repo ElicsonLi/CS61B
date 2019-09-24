@@ -26,12 +26,15 @@ public class TestBSTMap {
             assertTrue( null != b.get("hi" + i) && (b.get("hi"+i).equals(1+i))
                         && b.containsKey("hi" + i));
         }
+        //Test the printInOrder Method.
+        //b.printInOrder();
         assertEquals(455, b.size());
         b.clear();
         assertEquals(0, b.size());
         for (int i = 0; i < 455; i++) {
             assertTrue(null == b.get("hi" + i) && !b.containsKey("hi" + i));
         }
+
     }
 
     // assumes put works
