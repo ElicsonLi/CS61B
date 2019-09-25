@@ -8,15 +8,32 @@ import edu.princeton.cs.algs4.StdRandom;
 public class ComplexOomage implements Oomage {
     protected List<Integer> params;
     private static final double WIDTH = 0.05;
+    private Boolean Modified = false;
 
     @Override
     public int hashCode() {
-        int total = 0;
-        for (int x : params) {
-            total = total * 256;
-            total = total + x;
+        if(!Modified){
+            int total = 0;
+            for (int x : params) {
+                total = total * 256;
+                total = total + x;
+            }
+            return total;
+        }else {
+            /** just change the number 256 to a nonsense number
+             * 32 (according to the lecture), then everything will
+             * be work perfectly fine.
+             * However, if the params' size continue to be larger,
+             * then I am not sure,too.
+             */
+            int total = 0;
+            for (int x : params) {
+                total = total * 31;
+                total = total + x;
+            }
+            return total;
         }
-        return total;
+
     }
 
     @Override
