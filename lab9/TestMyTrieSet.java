@@ -14,7 +14,7 @@ public class TestMyTrieSet {
         for (int i = 0; i < 455; i++) {
             t.add("hi" + i);
             //make sure put is working via contains
-            assertTrue(t.contains("hi" + i));
+            assertTrue(""+i,t.contains("hi" + i));
         }
         t.clear();
         for (int i = 0; i < 455; i++) {
@@ -47,7 +47,7 @@ public class TestMyTrieSet {
 
         List<String> keys = t.keysWithPrefix("sa");
         for (String s: saStrings) {
-            assertTrue(keys.contains(s));
+            assertTrue(""+s,keys.contains(s));
         }
         for (String s: otherStrings) {
             assertFalse(keys.contains(s));
