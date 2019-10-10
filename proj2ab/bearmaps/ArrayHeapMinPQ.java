@@ -132,8 +132,10 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         Collections.swap(arrayTree,minPQ.pos,last.pos);
         minPQ.changePos(last);
         arrayTree.remove(size);
-        updatepos(arrayTree.get(1));
         size --;
+        if(size != 0){
+            updatepos(arrayTree.get(1));
+        }
         return minPQ.data;
     }
     /* Returns the number of items in the PQ. */
